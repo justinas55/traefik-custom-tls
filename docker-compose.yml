@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  service1:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.service1.rule=Host(`example.localhost`)"
+      - "traefik.http.routers.service1.entrypoints=websecure"
+      - "traefik.http.routers.service1.tls=true"
+      # Uncomment if using mTLS selectively (see traefik.yml)
+      # - "traefik.http.routers.service1.tls.options=require-client-cert@file"
+  service2:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.service2.rule=Host(`example2.localhost`)"
+      - "traefik.http.routers.service2.entrypoints=websecure"
+      - "traefik.http.routers.service2.tls=true"
+      # Uncomment if using mTLS selectively (see traefik.yml)
+      # - "traefik.http.routers.service2.tls.options=require-client-cert@file"
+  traefik:
+    image: traefik
+    ports:
+      # - 80:80 # If HTTP needed
+      - 443:443
+      - 8080:8080 # Traefik dashboard
+    volumes:
+      - ./certs:/etc/traefik/certs:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/conf:/etc/traefik/conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock

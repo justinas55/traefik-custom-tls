@@ -1,0 +1,20 @@
+tls:
+  certificates:
+    - certFile: /etc/traefik/certs/server.crt
+      keyFile: /etc/traefik/certs/server.key
+  options:
+    # Comment 'default' block to selectively enable mTLS for specific services
+    default:
+      clientAuth:
+        caFiles:
+          - /etc/traefik/certs/server.crt
+          # When migrating to new certificates enable both old and new certificates until all clients are updated - then leave only new
+          # - /etc/traefik/certs/servernew.crt
+        clientAuthType: RequireAndVerifyClientCert
+    require-client-cert:
+      clientAuth:
+        caFiles:
+          - /etc/traefik/certs/server.crt
+          # When migrating to new certificates enable both old and new certificates until all clients are updated - then leave only new
+          # - /etc/traefik/certs/servernew.crt
+        clientAuthType: RequireAndVerifyClientCert

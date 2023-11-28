@@ -1,0 +1,20 @@
+## traefik.yml
+
+# Docker configuration backend
+providers:
+  file:
+    directory: /etc/traefik/conf
+    watch: true
+  docker:
+    exposedByDefault: false
+    defaultRule: {}
+
+log:
+  level: DEBUG
+
+api:
+  insecure: true
+
+entryPoints:
+  websecure:
+    address: ":443"
