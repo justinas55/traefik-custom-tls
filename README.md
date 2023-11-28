@@ -76,7 +76,7 @@ Test connectivity service uses separate `test.example.localhost` which can be up
 7) Delete old CA from all clients
 
 ## Certificates (with CA and intermediate CA)
-
+```
 CA1 ----> main.example.localhost
     \-- > test.example.localhost
      \--> CA1-clients-ICA ------------> device1
@@ -85,6 +85,7 @@ CA1 ----> main.example.localhost
 CA2 ----> new.main.example.localhost
     \-- > new.test.example.localhost
      \--> CA2-clients-ICA ------------> new.device1
+```
 
 To generate certificates for testing:
 ```
