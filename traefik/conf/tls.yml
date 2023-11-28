@@ -1,20 +1,30 @@
 tls:
   certificates:
-    - certFile: /etc/traefik/certs/server.crt
-      keyFile: /etc/traefik/certs/server.key
+  # Initial certificate
+    - certFile: /etc/traefik/certs/main.example.localhost.crt # (old CA, CN=*.main.example.localhost)
+      keyFile: /etc/traefik/certs/main.example.localhost.key # (old CA, CN=*.main.example.localhost)
+  # Initial test endpoint certificate
+    - certFile: /etc/traefik/certs/test.example.localhost.crt # (old CA, CN=test.example.localhost) 
+      keyFile: /etc/traefik/certs/test.example.localhost.key # (old CA, CN=test.example.localhost)
+  # New v2 certificate for test endpoint (Server certificate update > Step 2)
+    # - certFile: /etc/traefik/certs/new.test.example.localhost.crt # (new CA, CN=test.example.localhost)
+    #   keyFile: /etc/traefik/certs/new.test.example.localhost.key # (new CA, CN=test.example.localhost)
+  # New v2 certificate for main endpoint (Server certificate update > Step 6)
+    # - certFile: /etc/traefik/certs/new.main.example.localhost.crt # (new CA, CN=*.main.example.localhost)
+    #   keyFile: /etc/traefik/certs/new.main.example.localhost.key # (new CA, CN=*.main.example.localhost)
   options:
     # Comment 'default' block to selectively enable mTLS for specific services
     default:
       clientAuth:
         caFiles:
-          - /etc/traefik/certs/server.crt
+          - /etc/traefik/certs/CA1-clients-ICA.crt
           # When migrating to new certificates enable both old and new certificates until all clients are updated - then leave only new
-          # - /etc/traefik/certs/servernew.crt
-        clientAuthType: RequireAndVerifyClientCert
-    require-client-cert:
-      clientAuth:
-        caFiles:
-          - /etc/traefik/certs/server.crt
-          # When migrating to new certificates enable both old and new certificates until all clients are updated - then leave only new
-          # - /etc/traefik/certs/servernew.crt
-        clientAuthType: RequireAndVerifyClientCert
+          # - /etc/traefik/certs/CA2-clients-ICA.crt
+        clientAuthType: RequireAndVerifyClientCert 
+    # require-client-cert:
+    #   clientAuth: 
+    #     caFiles:
+    #       - /etc/traefik/certs/CA1-clients-ICA.crt
+    #       # When migrating to new certificates enable both old and new certificates until all clients are updated - then leave only new
+    #       # - /etc/traefik/certs/CA2-clients-ICA.crt
+    #     clientAuthType: RequireAndVerifyClientCert

@@ -1,10 +1,9 @@
-## traefik.yml
-
-# Docker configuration backend
 providers:
+  # Dynamic file config
   file:
     directory: /etc/traefik/conf
     watch: true
+  # Docker configuration backend
   docker:
     exposedByDefault: false
     defaultRule: {}

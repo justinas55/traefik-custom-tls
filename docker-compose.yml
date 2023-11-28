@@ -4,7 +4,7 @@ services:
     image: traefik/whoami
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.service1.rule=Host(`example.localhost`)"
+      - "traefik.http.routers.service1.rule=Host(`svc1.main.example.localhost`)"
       - "traefik.http.routers.service1.entrypoints=websecure"
       - "traefik.http.routers.service1.tls=true"
       # Uncomment if using mTLS selectively (see traefik.yml)
@@ -13,11 +13,20 @@ services:
     image: traefik/whoami
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.service2.rule=Host(`example2.localhost`)"
+      - "traefik.http.routers.service2.rule=Host(`svc2.main.example.localhost`)"
       - "traefik.http.routers.service2.entrypoints=websecure"
       - "traefik.http.routers.service2.tls=true"
       # Uncomment if using mTLS selectively (see traefik.yml)
       # - "traefik.http.routers.service2.tls.options=require-client-cert@file"
+  connectivityTestService:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.connectivityTestService.rule=Host(`test.example.localhost`)"
+      - "traefik.http.routers.connectivityTestService.entrypoints=websecure"
+      - "traefik.http.routers.connectivityTestService.tls=true"
+      # Uncomment if using mTLS selectively (see traefik.yml)
+      # - "traefik.http.routers.connectivityTestService.tls.options=require-client-cert@file"
   traefik:
     image: traefik
     ports:
